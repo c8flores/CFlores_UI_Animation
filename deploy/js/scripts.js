@@ -1,6 +1,6 @@
 import {gsap} from "gsap";
-import {starAnimation} from "./demo.js"
+import {submitAnimation} from "./demo.js"
 
-const starTL = gsap.timeline();
-starTL.add(starAnimation());
+const submitTL = gsap.timeline();
+submitTL.add(submitAnimation());
 

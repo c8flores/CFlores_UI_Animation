@@ -5173,48 +5173,6 @@
      return starTL;
   }
 
-
-  function buttonHoverAnimation() {
-
-     const buttonSelector = document.querySelectorAll(".button");
-   
-     
-     for (let i = 0; i < buttonSelector.length; i++) {
-       
-       const buttonTextSelector = buttonSelector[i].querySelector("span");
-   
-       function mousemoveFn(event) {
-         
-         const buttonPos = event.currentTarget.getBoundingClientRect().left;
-   
-         
-         const xPosOfMouse = event.clientX - buttonPos;
-
-         const xPosOfMouseInsideButton =
-           xPosOfMouse - buttonSelector[i].offsetWidth / 2;
-   
-         const animationDivider = 3;
-   
-         console.log(xPosOfMouseInsideButton);
-   
-         gsapWithCSS.to(buttonTextSelector, 2, {
-           x: xPosOfMouseInsideButton / animationDivider,
-           ease: Power3.easeOut
-         });
-       }
-   
-       function mouseleaveFn() {
-         gsapWithCSS.to(buttonTextSelector, 1, {x: 0, ease: Power3.easeOut});
-       }
-   
-       buttonSelector[i].addEventListener("mousemove", mousemoveFn);
-   
-       buttonSelector[i].addEventListener("mouseleave", mouseleaveFn);
-     }
-   }
-   
-   buttonHoverAnimation();
-
   const starTL$1 = gsapWithCSS.timeline();
   starTL$1.add(starAnimation());
 
