@@ -81,7 +81,7 @@
       _installScope = {},
       _coreReady,
       _install = function _install(scope) {
-    return (_installScope = _merge(scope, _globals)) && gsap$1;
+    return (_installScope = _merge(scope, _globals)) && gsap;
   },
       _missingPlugin = function _missingPlugin(property, value) {
     return console.warn("Invalid property", property, "set to", value, "Missing plugin? gsap.registerPlugin()");
@@ -982,7 +982,7 @@
 
     _addGlobal(name, Plugin);
 
-    config.register && config.register(gsap$1, Plugin, PropTween);
+    config.register && config.register(gsap, Plugin, PropTween);
   },
 
   /*
@@ -1248,8 +1248,8 @@
           if (!_coreInitted && _windowExists()) {
             _win = _coreInitted = window;
             _doc = _win.document || {};
-            _globals.gsap = gsap$1;
-            (_win.gsapVersions || (_win.gsapVersions = [])).push(gsap$1.version);
+            _globals.gsap = gsap;
+            (_win.gsapVersions || (_win.gsapVersions = [])).push(gsap.version);
 
             _install(_installScope || _win.GreenSockGlobals || !_win.gsap && _win || {});
 
@@ -3520,7 +3520,7 @@
 
       if (target.length > 1) {
         var setters = target.map(function (t) {
-          return gsap$1.quickSetter(t, property, unit);
+          return gsap.quickSetter(t, property, unit);
         }),
             l = setters.length;
         return function (value) {
@@ -3733,7 +3733,7 @@
   }; //register core plugins
 
 
-  var gsap$1 = _gsap.registerPlugin({
+  var gsap = _gsap.registerPlugin({
     name: "attr",
     init: function init(target, vars, tween, index, targets) {
       var p, pt;
@@ -3756,7 +3756,7 @@
     }
   }, _buildModifierPlugin("roundProps", _roundModifier), _buildModifierPlugin("modifiers"), _buildModifierPlugin("snap", snap)) || _gsap; //to prevent the core plugins from being dropped via aggressive tree shaking, we must include them in the variable declaration in this way.
 
-  Tween.version = Timeline.version = gsap$1.version = "3.5.1";
+  Tween.version = Timeline.version = gsap.version = "3.5.1";
   _coreReady = 1;
 
   if (_windowExists()) {
@@ -5123,7 +5123,7 @@
       _getMatrix: _getMatrix
     }
   };
-  gsap$1.utils.checkPrefix = _checkPropPrefix;
+  gsap.utils.checkPrefix = _checkPropPrefix;
 
   (function (positionAndScale, rotation, others, aliases) {
     var all = _forEachName(positionAndScale + "," + rotation + "," + others, function (name) {
@@ -5147,21 +5147,74 @@
     _config.units[name] = "px";
   });
 
-  gsap$1.registerPlugin(CSSPlugin);
+  gsap.registerPlugin(CSSPlugin);
 
-  var gsapWithCSS = gsap$1.registerPlugin(CSSPlugin) || gsap$1,
+  var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap,
       // to protect from tree shaking
   TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
-  const moveBallTL = gsapWithCSS.timeline();
-  moveBallTL.from("#svg-image", {duration:1, y: -400, ease:"none"})
-              .to ("svg-image",{duration:1, y:-400, ease:"none"});
+  gsapWithCSS.set("#overlay", {transformOrigin:"center"});
+  gsapWithCSS.set("#Rectangle", {transformOrigin:"center"});
 
-  function moveBallAnimation(){
-     // return hourGlassTL; 
+  var RAD  = Math.PI / 180;
+  var PI_2 = Math.PI / 2;
+
+  var clipPath = document.querySelector("#arcPath");
+
+  var arc = {  
+    start: 360,
+    end: 0,
+    cx: 205,
+    cy: 205,
+    r: 79 
+  };
+
+  const starTL = gsapWithCSS.timeline();
+
+  starTL.from("#overlay", {duration:0.5, alpha:0, ease:"none", scale:3})
+        .from("#Rectangle", {duration:0.5, alpha:0, ease:"none", scale:0},"-=0.25")
+     .to(arc, 3, { end: 360, ease: "none", onUpdate: updatePath})
+     .to("#overlay", {duration:0.5, alpha:0, ease:"none", scale:3});
+
+
+  function starAnimation(){
+     return starTL;
   }
 
-  const mainTL = gsap.timeline();
-  mainTL.add(moveBallAnimation());
+
+
+  // gsap.to(arc, 3, { end: 360, ease: "none", onUpdate: updatePath});
+
+  updatePath();
+
+  function updatePath() {
+    clipPath.setAttribute("d", getPath(arc.cx, arc.cy, arc.r, arc.end, arc.start)); 
+  }
+
+  function getPath(cx, cy, r, a1, a2) {
+     
+    var delta = a2 - a1;
+    
+    if (delta === 360) {
+          
+      return "M " + (cx - r) + " " + cy + " a " + r + " " + r + " 0 1 0 " + r * 2 + " 0 a " + r + " " + r + " 0 1 0 " + -r * 2 + " 0z"; 
+    }
+    
+    var largeArc = delta > 180 ? 1 : 0;
+      
+    a1 = a1 * RAD - PI_2;
+    a2 = a2 * RAD - PI_2;
+
+    var x1 = cx + r * Math.cos(a2);   
+    var y1 = cy + r * Math.sin(a2);
+
+    var x2 = cx + r * Math.cos(a1); 
+    var y2 = cy + r * Math.sin(a1);
+      
+    return "M " + x1 + " " + y1 + " A " + r + " " + r + " 0 " + largeArc + " 0 " + x2 + " " + y2 + " L " + cx + " " + cy + "z";
+  }
+
+  const starTL$1 = gsapWithCSS.timeline();
+  starTL$1.add(starAnimation());
 
 }());

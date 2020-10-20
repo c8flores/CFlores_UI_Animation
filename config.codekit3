@@ -9,6 +9,16 @@
 	],
 "creatorBuild": "32186",
 "files": {
+	"/assets/star.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 2,
+		"oAP": "/assets/star.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
 	"/deploy/css/styles.css": {
 		"aP": 1,
 		"bl": 0,
@@ -61,10 +71,10 @@
 		"tS": 0
 		},
 	"/deploy/js/scripts.js": {
-		"bF": 0,
+		"bF": 4,
 		"ft": 64,
 		"ma": 0,
-		"mi": 1,
+		"mi": 0,
 		"oA": 0,
 		"oAP": "/deploy/js/scripts-min.js",
 		"oF": 0,
@@ -1552,7 +1562,7 @@
 			"optionString": ""
 			},
 		"no-unused-vars": {
-			"active": 1,
+			"active": 0,
 			"optionString": "{'vars': 'all', 'args': 'after-used', 'caughtErrors': 'none', 'ignoreRestSiblings': false}"
 			},
 		"no-use-before-define": {

@@ -1,14 +1,13 @@
-#svg-move {
-    display: grid;
-    grid-template-columns: auto 50% auto; 
-    grid-template-areas: ". svg .";
-    >div {
-       grid-area: svg;
-    
-    }
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-        svg{
-            border: 3x solid #000;
-        }
-
-}
+svg {
+    position: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
