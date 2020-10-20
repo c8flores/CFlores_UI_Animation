@@ -5166,7 +5166,7 @@
     end: 0,
     cx: 205,
     cy: 205,
-    r: 79 
+    r: 80 
   };
 
   const starTL = gsapWithCSS.timeline();
