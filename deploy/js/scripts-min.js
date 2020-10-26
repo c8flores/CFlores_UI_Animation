@@ -5163,17 +5163,17 @@
     r: 80 
   };
 
-  const starTL = gsapWithCSS.timeline();
+  const submitTL = gsapWithCSS.timeline();
 
-  starTL.from("#SUBMIT", {duration:0.5, alpha:0, ease:"none", scale:0},"-=0.25")
+  submitTL.from("#SUBMIT", {duration:0.5, alpha:0, ease:"none", scale:0},"-=0.25")
      .to(arc, 3, { end: 360, ease: "none"});
 
 
-  function starAnimation(){
-     return starTL;
+  function submitAnimation(){
+     return submitTL;
   }
 
-  const starTL$1 = gsapWithCSS.timeline();
-  starTL$1.add(starAnimation());
+  const submitTL$1 = gsapWithCSS.timeline();
+  submitTL$1.add(submitAnimation());
 
 }());

@@ -19,7 +19,7 @@ submitTL.from("#SUBMIT", {duration:0.5, alpha:0, ease:"none", scale:0},"-=0.25")
    .to(arc, 3, { end: 360, ease: "none"});
 
 
-export function stubmitAnimation(){
+export function submitAnimation(){
    return submitTL;
 }
  
